@@ -1,0 +1,440 @@
+definitions:
+  articleshandlers.CreateArticleRequest:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    type: object
+  articleshandlers.CreateArticleResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.ArticlesResponse'
+      message:
+        type: string
+    type: object
+  articleshandlers.DeleteArticleResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.ArticlesResponse'
+      message:
+        type: string
+    type: object
+  articleshandlers.ErrorResponse:
+    properties:
+      errorCode:
+        type: string
+      message:
+        type: string
+    type: object
+  articleshandlers.GetArticleResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.ArticlesResponse'
+      message:
+        type: string
+    type: object
+  articleshandlers.ListArticleResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.ArticlesResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  articleshandlers.UpdateArticleRequest:
+    properties:
+      content:
+        type: string
+      title:
+        type: string
+    type: object
+  articleshandlers.UpdateArticleResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.ArticlesResponse'
+      message:
+        type: string
+    type: object
+  newsHandler.CreateNewsObject:
+    properties:
+      firstContent:
+        type: string
+      secondContent:
+        type: string
+      thirdContent:
+        type: string
+      title:
+        type: string
+    type: object
+  newsHandler.CreateNewsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.NewsResponse'
+      message:
+        type: string
+    type: object
+  newsHandler.DeleteNewsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.NewsResponse'
+      message:
+        type: string
+    type: object
+  newsHandler.ErrorResponse:
+    properties:
+      errorCode:
+        type: string
+      message:
+        type: string
+    type: object
+  newsHandler.GetNewsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.NewsResponse'
+      message:
+        type: string
+    type: object
+  newsHandler.ListNewsResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schema.NewsResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  newsHandler.UpdateNewsObject:
+    properties:
+      firstContent:
+        type: string
+      secondContent:
+        type: string
+      thirdContent:
+        type: string
+      title:
+        type: string
+    type: object
+  newsHandler.UpdateNewsResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schema.NewsResponse'
+      message:
+        type: string
+    type: object
+  schema.ArticlesResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      id:
+        type: integer
+      title:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  schema.NewsResponse:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        type: string
+      firstContent:
+        type: string
+      id:
+        type: integer
+      secondContent:
+        type: string
+      thirdContent:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+info:
+  contact: {}
+  title: WebNewsAPI
+paths:
+  /article:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a Article
+      parameters:
+      - description: Article identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/articleshandlers.DeleteArticleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+      summary: Delete Article
+      tags:
+      - Article
+    get:
+      consumes:
+      - application/json
+      description: Show a Article
+      parameters:
+      - description: Article identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/articleshandlers.GetArticleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+      summary: Show Article
+      tags:
+      - Article
+    patch:
+      consumes:
+      - application/json
+      description: Update a Article
+      parameters:
+      - description: Article identification
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: article data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/articleshandlers.UpdateArticleRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/articleshandlers.UpdateArticleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+      summary: Update Article
+      tags:
+      - Article
+    post:
+      consumes:
+      - application/json
+      description: Create a Article for the app
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/articleshandlers.CreateArticleRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/articleshandlers.CreateArticleResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+      summary: Create Articles
+      tags:
+      - Article
+  /articles:
+    get:
+      consumes:
+      - application/json
+      description: List all articles
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/articleshandlers.ListArticleResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/articleshandlers.ErrorResponse'
+      summary: List Articles
+      tags:
+      - Article
+  /listnews:
+    get:
+      consumes:
+      - application/json
+      description: List all news
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/newsHandler.ListNewsResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+      summary: List news
+      tags:
+      - News
+  /news:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a news
+      parameters:
+      - description: News identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/newsHandler.DeleteNewsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+      summary: Delete news
+      tags:
+      - News
+    get:
+      consumes:
+      - application/json
+      description: Show a news
+      parameters:
+      - description: News identification
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/newsHandler.GetNewsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+      summary: Show news
+      tags:
+      - News
+    patch:
+      consumes:
+      - application/json
+      description: Update a news
+      parameters:
+      - description: News identification
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: News data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/newsHandler.UpdateNewsObject'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/newsHandler.UpdateNewsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+      summary: Update news
+      tags:
+      - News
+    post:
+      consumes:
+      - application/json
+      description: Create a news for the app
+      parameters:
+      - description: Request Body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/newsHandler.CreateNewsObject'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/newsHandler.CreateNewsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/newsHandler.ErrorResponse'
+      summary: Create News
+      tags:
+      - News
+swagger: "2.0"
